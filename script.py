@@ -20,11 +20,11 @@ def scrape_data_point():
     Returns:
         str: The headline text if found, otherwise an empty string.
     """
-    req = requests.get("https://www.thedp.com/section/news")
-    loguru.logger.info(f"Request URL: {req.url}")
-    loguru.logger.info(f"Request status code: {req.status_code}")
+    news_req = requests.get("https://www.thedp.com/section/news")
+    loguru.logger.info(f"Request URL: {news_req.url}")
+    loguru.logger.info(f"Request status code: {news_req.status_code}")
 
-    if req.ok:
+    if news_req.ok:
         # soup = bs4.BeautifulSoup(req.text, "html.parser")
         # target_element = soup.find("a", class_="frontpage-link")
         # data_point = "" if target_element is None else target_element.text
