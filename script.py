@@ -20,44 +20,16 @@ def scrape_data_point():
     Returns:
         str: The headline text if found, otherwise an empty string.
     """
-    # news_req = requests.get("https://www.thedp.com/section/news")
-    # loguru.logger.info(f"Request URL: {news_req.url}")
-    # loguru.logger.info(f"Request status code: {news_req.status_code}")
+    req = requests.get("https://www.thedp.com")
+    loguru.logger.info(f"Request URL: {req.url}")
+    loguru.logger.info(f"Request status code: {req.status_code}")
 
-    # if news_req.ok:
-        # soup = bs4.BeautifulSoup(req.text, "html.parser")
-        # target_element = soup.find("a", class_="frontpage-link")
-        # data_point = "" if target_element is None else target_element.text
-        # loguru.logger.info(f"Data point: {data_point}")
-        # return data_point
-
-    try:
-        news_req = requests.get("https://www.thedp.com/section/news")
-        loguru.logger.info(f"Request URL: {news_req.url}")
-        loguru.logger.info(f"Request status code: {news_req.status_code}")
-
-        news_soup = bs4.BeautifulSoup(news_req.text, "html.parser")
-
-        section_list = news_soup.find('div', class_='section-list')
-        admin_link = section_list.find('a', string='Administration')
-        
-        if admin_link:
-            admin_url = 'https://www.thedp.com/' + admin_link['href']
-            admin_req = requests.get(admin_url)
-            admin_soup = bs4.BeautifulSoup(admin_req.text, "html.parser")
-
-            top_headline_article = admin_soup.find('div', class_='row section-article')
-            top_headline = top_headline_article.find('h3', class_='standard-link').find('a').text
-        
-            data_point = top_headline
-            loguru.logger.info(f"Data point: {data_point}")
-            return data_point
-        else:
-            loguru.logger.warning("Admin link not found.")
-            return ""
-    except Exception as e:
-        loguru.logger.error(f"Failed to scrape data point: {e}")
-        return ""
+    if req.ok:
+        soup = bs4.BeautifulSoup(req.text, "html.parser")
+        target_element = soup.find("a", class_="frontpage-link")
+        data_point = "" if target_element is None else target_element.text
+        loguru.logger.info(f"Data point: {data_point}")
+        return data_point
 
 
 
