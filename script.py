@@ -34,7 +34,7 @@ def scrape_data_point():
         news_soup = bs4.BeautifulSoup(news_req.text, "html.parser")
         
         section_list = news_soup.find('div', class_='section-list')
-        admin_link = section_list.find('a', text='Administration')
+        admin_link = section_list.find('a', string='Administration')
         admin_url = 'https://www.thedp.com' + admin_link['href']
 
         admin_req = requests.get(admin_url)
